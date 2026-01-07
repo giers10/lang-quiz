@@ -140,6 +140,32 @@ function computeCounts(items: EntryData['items'], quiz: EntryData['quiz']) {
   };
 }
 
+function extractIgMeta(raw: any): EntryRecord['igMeta'] {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const username = raw.username || raw.owner?.username;
+  const full_name = raw.fullname || raw.full_name || raw.owner?.full_name;
+  const post_url = raw.post_url || raw.postUrl || raw.permalink;
+  const profile_pic_url =
+    raw.profile_pic_url ||
+    raw.owner?.hd_profile_pic_url_info?.url ||
+    raw.owner?.profile_pic_url ||
+    raw.owner?.profile_pic_url_info?.url;
+  const post_date = raw.post_date || raw.date || raw.taken_at_timestamp || raw.timestamp;
+  const description = raw.description || raw.caption;
+  const profile_url = username ? `https://www.instagram.com/${username}/` : undefined;
+
+  if (!username && !profile_pic_url && !post_date && !description) return undefined;
+  return {
+    username,
+    full_name,
+    profile_pic_url,
+    post_url,
+    profile_url,
+    post_date: post_date ? String(post_date) : undefined,
+    description,
+  };
+}
+
 async function loadEntries() {
   entryIndex.clear();
 
@@ -159,6 +185,7 @@ async function loadEntries() {
     const dir = path.dirname(resolvedMp4);
     const baseName = path.basename(resolvedMp4, '.mp4');
     const jsonPath = path.join(dir, `${baseName}.json`);
+    const mp4MetaPath = path.join(dir, `${baseName}.mp4.json`);
 
     if (!(await fileExists(jsonPath))) {
       continue;
@@ -167,6 +194,20 @@ async function loadEntries() {
     const resolvedJson = path.resolve(jsonPath);
     if (!ensureWithinDataRoot(resolvedJson)) {
       continue;
+    }
+
+    let igMeta: EntryRecord['igMeta'];
+    const resolvedMp4Meta = path.resolve(mp4MetaPath);
+    if (await fileExists(resolvedMp4Meta)) {
+      if (ensureWithinDataRoot(resolvedMp4Meta)) {
+        try {
+          const raw = await fs.readFile(resolvedMp4Meta, 'utf-8');
+          const json = JSON.parse(raw);
+          igMeta = extractIgMeta(json);
+        } catch (err) {
+          console.warn(`Failed to parse mp4 metadata ${resolvedMp4Meta}:`, err);
+        }
+      }
     }
 
     let parsed: EntryData | null = null;
@@ -196,6 +237,7 @@ async function loadEntries() {
       items: parsed.items || { grammar: [], vocab: [], conversation: [], key_phrases: [] },
       quiz: parsed.quiz || [],
       ui_hints: parsed.ui_hints || { recommended_order: [] },
+      igMeta,
       videoPath: resolvedMp4,
       jsonPath: resolvedJson,
       video_url,
@@ -214,6 +256,7 @@ function sanitizeEntryResponse(entry: EntryRecord) {
     items: entry.items || { grammar: [], vocab: [], conversation: [], key_phrases: [] },
     quiz: entry.quiz || [],
     ui_hints: entry.ui_hints || { recommended_order: [] },
+    ig_meta: entry.igMeta,
     video_url: entry.video_url,
     counts: entry.counts,
   };

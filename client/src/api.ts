@@ -25,6 +25,7 @@ function normalizeDetail(payload: any): EntryDetail {
     id: String(payload?.id ?? ''),
     title: payload?.title || payload?.meta?.title_en || String(payload?.id ?? 'Untitled'),
     meta: payload?.meta || {},
+    ig_meta: payload?.ig_meta,
     items,
     quiz: Array.isArray(payload?.quiz) ? payload.quiz : [],
     ui_hints: payload?.ui_hints || {},

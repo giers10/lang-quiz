@@ -64,6 +64,15 @@ export interface EntryDetail {
     type?: string;
     title_en?: string;
   };
+  ig_meta?: {
+    username?: string;
+    full_name?: string;
+    profile_pic_url?: string;
+    post_url?: string;
+    profile_url?: string;
+    post_date?: string;
+    description?: string;
+  };
   items: EntryItems;
   quiz: QuizQuestion[];
   ui_hints?: {
