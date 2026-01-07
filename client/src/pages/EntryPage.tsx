@@ -40,7 +40,7 @@ export default function EntryPage() {
   const counts = entry.counts || { grammar: 0, vocab: 0, key_phrases: 0, conversation: 0, quiz: 0 };
   const quizLink = `/quiz?mode=entry&id=${encodeURIComponent(entry.id)}`;
   const ig = entry.ig_meta;
-  const profileUrl = ig?.post_url || ig?.profile_url || (ig?.username ? `https://www.instagram.com/${ig.username}/` : undefined);
+  const profileUrl = ig?.profile_url || (ig?.username ? `https://www.instagram.com/${ig.username}/` : undefined);
   let postDate: string | undefined;
   if (ig?.post_date) {
     const parsed = new Date(ig.post_date);
