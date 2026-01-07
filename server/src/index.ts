@@ -166,6 +166,16 @@ function extractIgMeta(raw: any): EntryRecord['igMeta'] {
   };
 }
 
+function isAllowedProfileHost(urlString: string) {
+  try {
+    const { hostname } = new URL(urlString);
+    const safeHosts = ['instagram.com', 'cdninstagram.com', 'fbcdn.net'];
+    return safeHosts.some((h) => hostname.endsWith(h) || hostname.includes(`.${h}`));
+  } catch {
+    return false;
+  }
+}
+
 async function loadEntries() {
   entryIndex.clear();
 
