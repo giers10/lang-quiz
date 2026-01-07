@@ -37,7 +37,6 @@ export default function EntryPage() {
   if (loading) return <div className="loading">Loading entry…</div>;
   if (error || !entry) return <div className="error">{error || 'Entry not found.'}</div>;
 
-  const counts = entry.counts || { grammar: 0, vocab: 0, key_phrases: 0, conversation: 0, quiz: 0 };
   const quizLink = `/quiz?mode=entry&id=${encodeURIComponent(entry.id)}`;
   const ig = entry.ig_meta;
   const profileUrl = ig?.profile_url || (ig?.username ? `https://www.instagram.com/${ig.username}/` : undefined);
