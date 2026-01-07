@@ -54,16 +54,7 @@ export default function EntryPage() {
       </div>
       <div className="page-header">
         <div>
-          <p className="eyebrow">{entry.meta?.mode || 'mode not set'}</p>
           <h1>{entry.title}</h1>
-          <p className="muted">{entry.meta?.type}</p>
-          <div className="chips">
-            <span className="pill">Grammar {counts.grammar}</span>
-            <span className="pill">Vocab {counts.vocab}</span>
-            <span className="pill">Phrases {counts.key_phrases}</span>
-            <span className="pill">Conversation {counts.conversation}</span>
-            <span className="pill pill--accent">Quiz {counts.quiz}</span>
-          </div>
         </div>
         <div className="actions">
           <Link className="button" to={quizLink}>Start quiz (this entry)</Link>
