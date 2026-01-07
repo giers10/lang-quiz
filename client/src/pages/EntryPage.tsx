@@ -12,7 +12,6 @@ export default function EntryPage() {
   const [entry, setEntry] = useState<EntryDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [compactVideo, setCompactVideo] = useState(true);
 
   const entryId = useMemo(() => {
     try {
@@ -72,12 +71,7 @@ export default function EntryPage() {
       </div>
 
       <div className="video-row">
-        <VideoPlayer src={entry.video_url} variant={compactVideo ? 'compact' : 'wide'} />
-        <div className="video-actions">
-          <button className="button button--ghost" onClick={() => setCompactVideo((v) => !v)}>
-            {compactVideo ? 'Enlarge video' : 'Compact video'}
-          </button>
-        </div>
+        <VideoPlayer src={entry.video_url} variant="compact" />
       </div>
       {ig && (
         <div className="ig-block">
@@ -116,21 +110,6 @@ export default function EntryPage() {
           </div>
         </div>
       )}
-
-      <div className="meta-box">
-        <div>
-          <div className="label">Mode</div>
-          <div>{entry.meta?.mode || 'n/a'}</div>
-        </div>
-        <div>
-          <div className="label">Type</div>
-          <div>{entry.meta?.type || 'n/a'}</div>
-        </div>
-        <div>
-          <div className="label">Entry ID</div>
-          <div className="muted code">{entry.id}</div>
-        </div>
-      </div>
 
       <GrammarPanel items={entry.items?.grammar} />
       <VocabPanel items={entry.items?.vocab} />
