@@ -80,6 +80,15 @@ interface EntryRecord {
   items: EntryData['items'];
   quiz: EntryData['quiz'];
   ui_hints: EntryData['ui_hints'];
+  igMeta?: {
+    username?: string;
+    full_name?: string;
+    profile_pic_url?: string;
+    post_url?: string;
+    profile_url?: string;
+    post_date?: string;
+    description?: string;
+  };
   videoPath: string;
   jsonPath: string;
   video_url: string;
