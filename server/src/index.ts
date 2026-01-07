@@ -321,6 +321,51 @@ async function main() {
     res.json({ ok: true, entries: entryIndex.size });
   });
 
+  app.get('/api/profile-pic', async (req, res) => {
+    const idParam = req.query.id;
+    if (!idParam || typeof idParam !== 'string') {
+      res.status(400).json({ error: 'Missing id query param' });
+      return;
+    }
+
+    const entry = entryIndex.get(idParam);
+    const url = entry?.igMeta?.profile_pic_url;
+    if (!entry || !url) {
+      res.status(404).json({ error: 'Profile picture not found' });
+      return;
+    }
+
+    if (!isAllowedProfileHost(url)) {
+      res.status(400).json({ error: 'Profile host not permitted' });
+      return;
+    }
+
+    try {
+      const upstream = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (IG Japanese Quizzer)',
+          Accept: 'image/*',
+        },
+        redirect: 'follow',
+      });
+
+      if (!upstream.ok) {
+        res.status(upstream.status).json({ error: 'Failed to load image' });
+        return;
+      }
+
+      const contentType = upstream.headers.get('content-type') || 'image/jpeg';
+      const buffer = Buffer.from(await upstream.arrayBuffer());
+      res.setHeader('Content-Type', contentType);
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+      res.setHeader('Content-Length', buffer.length.toString());
+      res.end(buffer);
+    } catch (err) {
+      console.error('Proxy profile-pic error', err);
+      res.status(500).json({ error: 'Proxy failed' });
+    }
+  });
+
   app.listen(port, () => {
     console.log(`Server listening on http://localhost:${port}`);
     console.log(`Data root: ${DATA_ROOT}`);
