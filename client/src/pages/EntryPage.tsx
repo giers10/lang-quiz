@@ -12,6 +12,7 @@ export default function EntryPage() {
   const [entry, setEntry] = useState<EntryDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [compactVideo, setCompactVideo] = useState(true);
 
   const entryId = useMemo(() => {
     try {
@@ -70,7 +71,14 @@ export default function EntryPage() {
         </div>
       </div>
 
-      <VideoPlayer src={entry.video_url} />
+      <div className="video-row">
+        <VideoPlayer src={entry.video_url} variant={compactVideo ? 'compact' : 'wide'} />
+        <div className="video-actions">
+          <button className="button button--ghost" onClick={() => setCompactVideo((v) => !v)}>
+            {compactVideo ? 'Enlarge video' : 'Compact video'}
+          </button>
+        </div>
+      </div>
       {ig && (
         <div className="ig-block">
           {ig.profile_pic_url ? (
