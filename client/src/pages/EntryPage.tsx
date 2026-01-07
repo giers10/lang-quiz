@@ -74,7 +74,17 @@ export default function EntryPage() {
         <div className="ig-block">
           {ig.profile_pic_url ? (
             <a href={profileUrl || '#'} target="_blank" rel="noreferrer">
-              <img className="ig-avatar" src={ig.profile_pic_url} alt={ig.username || 'profile'} />
+              <img
+                className="ig-avatar"
+                src={`/api/profile-pic?id=${encodeURIComponent(entry.id)}`}
+                alt={ig.username || 'profile'}
+                onError={(e) => {
+                  if (ig.profile_pic_url && !e.currentTarget.dataset.fallback) {
+                    e.currentTarget.dataset.fallback = '1';
+                    e.currentTarget.src = ig.profile_pic_url;
+                  }
+                }}
+              />
             </a>
           ) : (
             <div className="ig-avatar placeholder" />
