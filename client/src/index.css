@@ -220,6 +220,26 @@ h4 {
   white-space: pre-wrap;
 }
 
+.ig-desc.expandable .clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ig-desc.expandable .full {
+  white-space: pre-wrap;
+}
+
+.link-button {
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.25rem 0;
+}
+
 .meta-box {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
