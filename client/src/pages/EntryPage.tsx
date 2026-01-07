@@ -55,13 +55,10 @@ export default function EntryPage() {
         <div>
           <h1>{entry.title}</h1>
         </div>
-        <div className="actions">
-          <Link className="button" to={quizLink}>Start quiz (this entry)</Link>
-        </div>
       </div>
 
       <div className="video-row">
-        <VideoPlayer src={entry.video_url} variant="compact" />
+        <VideoPlayer src={entry.video_url} variant="compact" quizLink={quizLink} />
       </div>
       {ig && (
         <div className="ig-block">
