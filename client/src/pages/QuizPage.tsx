@@ -21,5 +21,7 @@ export default function QuizPage() {
 
   const defaultMode = mode === 'entry' ? 'single' : mode === 'selected' ? 'selected' : 'all';
 
-  return <QuizRunner defaultMode={defaultMode} defaultEntryId={entryId} />;
+  const autoStart = mode === 'entry' && !!entryId;
+
+  return <QuizRunner defaultMode={defaultMode} defaultEntryId={entryId} autoStart={autoStart} />;
 }
