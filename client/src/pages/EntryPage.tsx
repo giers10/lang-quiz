@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { fetchEntry } from '../api';
 import VideoPlayer from '../components/VideoPlayer';
 import { ConversationPanel, GrammarPanel, KeyPhrasePanel, VocabPanel } from '../components/ItemPanels';
+import ExpandableText from '../components/ExpandableText';
 import type { EntryDetail } from '../types';
 
 export default function EntryPage() {
