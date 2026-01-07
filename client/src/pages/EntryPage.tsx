@@ -38,6 +38,9 @@ export default function EntryPage() {
 
   const counts = entry.counts || { grammar: 0, vocab: 0, key_phrases: 0, conversation: 0, quiz: 0 };
   const quizLink = `/quiz?mode=entry&id=${encodeURIComponent(entry.id)}`;
+  const ig = entry.ig_meta;
+  const profileUrl = ig?.profile_url || (ig?.username ? `https://www.instagram.com/${ig.username}/` : undefined);
+  const postDate = ig?.post_date ? new Date(ig.post_date).toLocaleString() : undefined;
 
   return (
     <div className="entry-page">
@@ -63,6 +66,31 @@ export default function EntryPage() {
       </div>
 
       <VideoPlayer src={entry.video_url} />
+      {ig && (
+        <div className="ig-block">
+          {ig.profile_pic_url ? (
+            <a href={profileUrl || '#'} target="_blank" rel="noreferrer">
+              <img className="ig-avatar" src={ig.profile_pic_url} alt={ig.username || 'profile'} />
+            </a>
+          ) : (
+            <div className="ig-avatar placeholder" />
+          )}
+          <div className="ig-body">
+            <div className="ig-row">
+              {ig.username ? (
+                <a className="ig-name" href={profileUrl || '#'} target="_blank" rel="noreferrer">
+                  {ig.username}
+                </a>
+              ) : (
+                <span className="ig-name">Instagram</span>
+              )}
+              {ig.full_name && <span className="muted"> · {ig.full_name}</span>}
+            </div>
+            <div className="muted">{postDate || ig.post_date || 'Date unknown'}</div>
+            {ig.description && <p className="ig-desc">{ig.description}</p>}
+          </div>
+        </div>
+      )}
 
       <div className="meta-box">
         <div>
