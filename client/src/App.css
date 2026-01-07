@@ -1,0 +1,45 @@
+.app-shell {
+  min-height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(12px);
+}
+
+.brand {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.link {
+  padding: 0.55rem 0.85rem;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+}
+
+.link.active {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--accent);
+}
+
+.main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}

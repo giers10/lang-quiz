@@ -1,0 +1,116 @@
+You analyze an Instagram-style Japanese language video.
+The video is either Japanese-only or English+Japanese.
+
+Goal: Create a compact learning JSON for a custom quiz website.
+The website will ask the user questions; if the user is wrong or taps "Don't know",
+we will show the explanation from this JSON and the original IG media.
+
+TOKEN BUDGET:
+Be concise. Do not duplicate explanations inside questions.
+
+STRICT RULES:
+1) Do not invent. Only include words/phrases/grammar that clearly appear in the video.
+2) For every Japanese string containing kanji, provide a full hiragana reading in a separate field "kana".
+3) Keep it small:
+   - grammar: max 2
+   - vocab: max 10
+   - conversation lines: max 10
+   - key_phrases: max 10
+4) NO timestamps. NO evidence_quote. NO source fields. NO confidence fields.
+5) Questions MUST reference items by id (do not repeat long explanations in questions).
+6) Provide 1–3 questions per item (depending on usefulness). Prefer: cloze, multiple choice, match, register-choice.
+
+OUTPUT:
+Return ONLY valid JSON (no markdown). UTF-8 Japanese.
+
+SCHEMA:
+
+{
+  "meta": {
+    "mode": "ja_only|en+ja",
+    "type": "grammar|vocab|conversation|mixed|unknown",
+    "title_en": "short title (5-8 words max)"
+  },
+  "items": {
+    "grammar": [
+      {
+        "id": "g1",
+        "pattern": "string",
+        "meaning_en": "one line",
+        "use_note_en": "1-2 lines max",
+        "register": "polite|neutral|casual|slang|formal|unknown",
+        "example": {
+          "jp": "string",
+          "kana": "string (hiragana reading; required if jp has kanji)",
+          "en": "string"
+        }
+      }
+    ],
+    "vocab": [
+      {
+        "id": "v1",
+        "jp": "surface form",
+        "kana": "hiragana reading (required if jp has kanji; for kana-only words keep as-is)",
+        "meaning_en": "short",
+        "register": "polite|neutral|casual|slang|formal|unknown",
+        "note_en": "optional, 1 line max",
+        "example": {
+          "jp": "optional",
+          "kana": "optional",
+          "en": "optional"
+        }
+      }
+    ],
+    "conversation": [
+      {
+        "id": "c1",
+        "jp": "exact line",
+        "kana": "hiragana reading (required if jp has kanji)",
+        "en": "translation",
+        "register": "polite|neutral|casual|slang|mixed|unknown"
+      }
+    ],
+    "key_phrases": [
+      {
+        "id": "k1",
+        "jp": "phrase",
+        "kana": "reading (hiragana if needed)",
+        "meaning_en": "short",
+        "when_to_use_en": "1-2 lines max",
+        "register": "polite|neutral|casual|slang|formal|unknown"
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q1",
+      "targets": ["k1"], 
+      "type": "mc_meaning|mc_register|cloze|match|choose_best_reply",
+      "prompt_en": "string",
+      "payload": {
+        "sentence_jp": "optional",
+        "sentence_kana": "optional",
+        "blanked": "optional (use ____ for blank)",
+        "options": ["A", "B", "C", "D"],
+        "pairs": [{"left":"", "right":""}]
+      },
+      "answer": {
+        "correct_index": 0,
+        "correct_text": "optional (for non-mc types)"
+      }
+    }
+  ],
+  "ui_hints": {
+    "recommended_order": ["g1","k1","k2","v1"],
+    "show_first": "quiz",
+    "explain_on_fail": true
+  }
+}
+
+QUESTION GUIDELINES:
+- For each grammar item: make at least 1 cloze question from the example, and 1 meaning or usage question.
+- For vocab/key_phrases: make at least 1 meaning multiple-choice and optionally 1 register or “best situation” question.
+- For conversation lines: optionally make “choose the best reply” or “what does this line mean” questions.
+- Keep prompts short. Do not restate long explanations. The website will show explanations after.
+
+Now analyze the video and output ONLY the JSON.
