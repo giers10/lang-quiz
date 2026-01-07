@@ -10,6 +10,7 @@ const TOTAL_QUESTIONS = 10;
 interface QuizRunnerProps {
   defaultMode?: Mode;
   defaultEntryId?: string;
+  autoStart?: boolean;
 }
 
 interface TargetHit {
@@ -194,7 +195,7 @@ function ExplanationPanel({ question, targets }: { question: QuizQuestionWithEnt
   );
 }
 
-export default function QuizRunner({ defaultMode = 'all', defaultEntryId }: QuizRunnerProps) {
+export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoStart }: QuizRunnerProps) {
   const [entries, setEntries] = useState<EntrySummary[]>([]);
   const [loadingEntries, setLoadingEntries] = useState(true);
   const [mode, setMode] = useState<Mode>(defaultMode);
@@ -222,6 +223,13 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId }: Quiz
       setSelectedIds([defaultEntryId]);
     }
   }, [defaultEntryId]);
+
+  useEffect(() => {
+    if (autoStart && defaultEntryId && entries.length > 0) {
+      startQuiz();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoStart, defaultEntryId, entries.length]);
 
   const currentQuestion = useMemo(() => questions[currentIndex], [questions, currentIndex]);
 
