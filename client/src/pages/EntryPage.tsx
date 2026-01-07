@@ -40,7 +40,11 @@ export default function EntryPage() {
   const quizLink = `/quiz?mode=entry&id=${encodeURIComponent(entry.id)}`;
   const ig = entry.ig_meta;
   const profileUrl = ig?.profile_url || (ig?.username ? `https://www.instagram.com/${ig.username}/` : undefined);
-  const postDate = ig?.post_date ? new Date(ig.post_date).toLocaleString() : undefined;
+  let postDate: string | undefined;
+  if (ig?.post_date) {
+    const parsed = new Date(ig.post_date);
+    postDate = isNaN(parsed.getTime()) ? ig.post_date : parsed.toLocaleString();
+  }
 
   return (
     <div className="entry-page">
