@@ -89,11 +89,11 @@ export default function EntryPage() {
           ) : (
             <div className="ig-avatar placeholder" />
           )}
-          <div className="ig-body">
-            <div className="ig-row">
-              {ig.username ? (
-                <a className="ig-name" href={profileUrl || '#'} target="_blank" rel="noreferrer">
-                  {ig.username}
+            <div className="ig-body">
+              <div className="ig-row">
+                {ig.username ? (
+                  <a className="ig-name" href={profileUrl || '#'} target="_blank" rel="noreferrer">
+                    {ig.username}
                 </a>
               ) : (
                 <span className="ig-name">Instagram</span>
@@ -101,7 +101,9 @@ export default function EntryPage() {
               {ig.full_name && <span className="muted"> · {ig.full_name}</span>}
             </div>
             <div className="muted">{postDate || ig.post_date || 'Date unknown'}</div>
-            {ig.description && <p className="ig-desc">{ig.description}</p>}
+            {ig.description && (
+              <ExpandableText text={ig.description} />
+            )}
           </div>
         </div>
       )}
