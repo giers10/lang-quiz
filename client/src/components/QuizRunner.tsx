@@ -262,6 +262,22 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
   }, [autoStart, defaultEntryId, entries.length, status]);
 
   const currentQuestion = useMemo(() => questions[currentIndex], [questions, currentIndex]);
+  const canSubmit = useMemo(() => {
+    if (!currentQuestion) return false;
+    if (currentQuestion.type === 'cloze') {
+      return Boolean(response && String(response).trim().length > 0);
+    }
+    if (currentQuestion.type === 'match') {
+      return Boolean(response && Object.values(response).every((v) => v));
+    }
+    if ((currentQuestion.type || '').startsWith('mc') || currentQuestion.type === 'choose_best_reply') {
+      return typeof response === 'number';
+    }
+    if (!currentQuestion.type) {
+      return typeof response === 'number';
+    }
+    return true;
+  }, [currentQuestion, response]);
 
   const resetQuestionState = () => {
     setResponse(null);
