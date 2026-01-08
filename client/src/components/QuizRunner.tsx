@@ -379,7 +379,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
         <h2>Nice work!</h2>
         <p className="muted">You scored {score} out of {questions.length}.</p>
         <div className="actions">
-          <button className="button" onClick={() => setStatus('setup')}>
+          <button className="button" onClick={startQuiz}>
             Play again
           </button>
         </div>
