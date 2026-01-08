@@ -1,4 +1,4 @@
-import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
+import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import OverviewPage from './pages/OverviewPage';
 import EntryPage from './pages/EntryPage';
 import QuizPage from './pages/QuizPage';
@@ -7,6 +7,7 @@ import './App.css';
 
 export default function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   const startRandomQuiz = () => {
     navigate(`/quiz?mode=all&nonce=${Date.now()}`);
   };
@@ -37,7 +38,9 @@ export default function App() {
             </NavLink>
             <NavLink
               to="/entry/random"
-              className={({ isActive }) => (isActive ? 'link active' : 'link')}
+              className={({ isActive }) =>
+                isActive || location.pathname.startsWith('/entry') ? 'link active' : 'link'
+              }
               onClick={(e) => {
                 e.preventDefault();
                 startRandomReel();
