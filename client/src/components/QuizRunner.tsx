@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { fetchEntries, fetchEntry } from '../api';
 import type { EntryDetail, EntryItems, EntrySummary, QuizQuestionWithEntry } from '../types';
 import VideoPlayer from './VideoPlayer';
