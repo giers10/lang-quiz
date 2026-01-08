@@ -505,7 +505,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
           <div className="pill">Wrong {wrongCount}</div>
           <div className="pill">Skipped {skippedCount}</div>
         </div>
-        <div className="actions" style={{ gap: '0.5rem', flexWrap: 'wrap' }}>
+        <div className="actions" style={{ flexWrap: 'wrap' }}>
           <button
             className="button button--ghost"
             onClick={() => {
@@ -515,16 +515,16 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
           >
             Back
           </button>
-          <button className="button" onClick={startQuiz}>
+          <button className="button button--primary" onClick={startQuiz}>
             Play again
           </button>
-          <NavLink className="button button--ghost" to="/">
+          <Link className="button button--ghost" to="/">
             Home
-          </NavLink>
+          </Link>
           {entryLink && (
-            <NavLink className="button button--ghost" to={entryLink}>
+            <Link className="button button--ghost" to={entryLink}>
               Back to learn page
-            </NavLink>
+            </Link>
           )}
         </div>
       </div>
