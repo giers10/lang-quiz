@@ -91,13 +91,18 @@ function QuestionRenderer({
   question,
   response,
   onChange,
+  showResult,
+  lastCorrect,
 }: {
   question: QuizQuestionWithEntry;
   response: any;
   onChange: (val: any) => void;
+  showResult: boolean;
+  lastCorrect: boolean;
 }) {
   const payload = question.payload || {};
   const type = question.type || '';
+  const correctIndex = typeof question.answer?.correct_index === 'number' ? question.answer.correct_index : null;
 
   if (type === 'cloze') {
     const sentence = payload.sentence_jp || payload.sentence || '';
@@ -157,7 +162,14 @@ function QuestionRenderer({
   return (
     <div className="question-block">
       {options.map((option, idx) => (
-        <label key={idx} className="option">
+        <label
+          key={idx}
+          className={[
+            'option',
+            showResult && correctIndex === idx ? 'correct' : '',
+            showResult && !lastCorrect && response === idx && correctIndex !== idx ? 'incorrect' : '',
+          ].join(' ').trim()}
+        >
           <input
             type="radio"
             checked={response === idx}
