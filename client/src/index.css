@@ -101,6 +101,7 @@ h4 {
 .entry-card__content {
   flex: 1;
   padding-right: 1rem;
+  max-width: 75%;
 }
 
 .entry-card__title {
