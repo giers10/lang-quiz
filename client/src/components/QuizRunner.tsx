@@ -179,10 +179,24 @@ function ExplanationPanel({ question, targets }: { question: QuizQuestionWithEnt
         <div className="explanation-grid">
           {targets.map(({ group, item }) => (
             <div key={`${group}-${item.id || item.jp}`} className="panel-card">
-              <div className="panel-card__title">{item.jp || item.pattern || item.id}</div>
-              <div className="muted">{item.meaning_en || item.en || item.when_to_use_en}</div>
+              <div className="panel-card__title">
+                {item.jp || item.pattern || item.id}
+                {item.kana && <div className="subline">{item.kana}</div>}
+              </div>
+              <div className="muted">
+                {item.meaning_en || item.meaning || item.en || item.when_to_use_en || item.note_en}
+              </div>
               {item.use_note_en && <div className="subline">{item.use_note_en}</div>}
+              {item.when_to_use_en && <div className="subline">{item.when_to_use_en}</div>}
               {item.register && <span className="pill pill--ghost">{item.register}</span>}
+              {(item.example || item.example_en || item.example_jp) && (
+                <div className="item-row">
+                  <span className="label">Example</span>
+                  <div className="subline">{item.example?.jp || item.example_jp}</div>
+                  <div className="subline muted">{item.example?.kana || item.example_kana}</div>
+                  <div className="subline muted">{item.example?.en || item.example_en}</div>
+                </div>
+              )}
               <div className="tag">{group}</div>
             </div>
           ))}
@@ -191,6 +205,31 @@ function ExplanationPanel({ question, targets }: { question: QuizQuestionWithEnt
         <p className="muted">No linked study items were found for this question.</p>
       )}
       <VideoPlayer src={question.video_url} />
+      {question.ig_meta && (
+        <div className="ig-block">
+          {question.ig_meta.profile_pic_url ? (
+            <a href={question.ig_meta.profile_url || '#'} target="_blank" rel="noreferrer">
+              <img className="ig-avatar" src={question.ig_meta.profile_pic_url} alt={question.ig_meta.username || 'profile'} />
+            </a>
+          ) : (
+            <div className="ig-avatar placeholder" />
+          )}
+          <div className="ig-body">
+            <div className="ig-row">
+              {question.ig_meta.username ? (
+                <a className="ig-name" href={question.ig_meta.profile_url || '#'} target="_blank" rel="noreferrer">
+                  {question.ig_meta.username}
+                </a>
+              ) : (
+                <span className="ig-name">Instagram</span>
+              )}
+              {question.ig_meta.full_name && <span className="muted"> · {question.ig_meta.full_name}</span>}
+            </div>
+            <div className="muted">{question.ig_meta.post_date || ''}</div>
+            {question.ig_meta.description && <p className="ig-desc">{question.ig_meta.description}</p>}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
