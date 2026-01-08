@@ -252,11 +252,11 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
   }, []);
 
   useEffect(() => {
-    if (autoStart && entries.length > 0) {
+    if (autoStart && status === 'setup' && entries.length > 0) {
       startQuiz();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoStart, defaultEntryId, entries.length]);
+  }, [autoStart, defaultEntryId, entries.length, status]);
 
   const currentQuestion = useMemo(() => questions[currentIndex], [questions, currentIndex]);
 
