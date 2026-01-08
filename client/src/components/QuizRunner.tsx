@@ -491,7 +491,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
         )}
         {!showResult ? (
           <>
-            <button className="button" onClick={() => handleSubmit(false)}>
+            <button className="button" onClick={() => handleSubmit(false)} disabled={!canSubmit}>
               Submit
             </button>
             <button className="button button--ghost" onClick={() => handleSubmit(true)}>
