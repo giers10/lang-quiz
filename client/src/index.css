@@ -218,10 +218,10 @@ h4 {
 }
 
 .video-row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  align-items: start;
+  gap: 0.75rem;
 }
 
 .video-actions {
@@ -231,12 +231,23 @@ h4 {
 
 .video-cta {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
 }
 
 .video-cta .button {
   padding: 0.85rem 1.5rem;
   font-size: 1.05rem;
+}
+
+@media (max-width: 820px) {
+  .video-row {
+    grid-template-columns: 1fr;
+  }
+  .video-cta {
+    justify-content: center;
+  }
 }
 
 .ig-block {
