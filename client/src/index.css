@@ -229,6 +229,16 @@ h4 {
   justify-content: center;
 }
 
+.video-cta {
+  display: flex;
+  justify-content: center;
+}
+
+.video-cta .button {
+  padding: 0.85rem 1.5rem;
+  font-size: 1.05rem;
+}
+
 .ig-block {
   display: flex;
   gap: 0.75rem;
