@@ -93,14 +93,12 @@ function QuestionRenderer({
   onChange,
   showResult,
   lastCorrect,
-  canSubmit,
 }: {
   question: QuizQuestionWithEntry;
   response: any;
   onChange: (val: any) => void;
   showResult: boolean;
   lastCorrect: boolean;
-  canSubmit: boolean;
 }) {
   const payload = question.payload || {};
   const type = question.type || '';
