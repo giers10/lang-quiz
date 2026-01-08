@@ -34,7 +34,7 @@ export default function App() {
                 startRandomQuiz();
               }}
             >
-              New Random Quiz
+              Random Quiz
             </NavLink>
             <NavLink
               to="/entry/random"
