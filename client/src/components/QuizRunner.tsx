@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { fetchEntries, fetchEntry } from '../api';
 import type { EntryDetail, EntryItems, EntrySummary, QuizQuestionWithEntry } from '../types';
 import VideoPlayer from './VideoPlayer';
