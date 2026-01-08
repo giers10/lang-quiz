@@ -171,6 +171,8 @@ function QuestionRenderer({
   );
 }
 
+import IgMetaBlock from './IgMetaBlock';
+
 function ExplanationPanel({ question, targets }: { question: QuizQuestionWithEntry; targets: TargetHit[] }) {
   return (
     <div className="explanation">
@@ -205,31 +207,7 @@ function ExplanationPanel({ question, targets }: { question: QuizQuestionWithEnt
         <p className="muted">No linked study items were found for this question.</p>
       )}
       <VideoPlayer src={question.video_url} />
-      {question.ig_meta && (
-        <div className="ig-block">
-          {question.ig_meta.profile_pic_url ? (
-            <a href={question.ig_meta.profile_url || '#'} target="_blank" rel="noreferrer">
-              <img className="ig-avatar" src={question.ig_meta.profile_pic_url} alt={question.ig_meta.username || 'profile'} />
-            </a>
-          ) : (
-            <div className="ig-avatar placeholder" />
-          )}
-          <div className="ig-body">
-            <div className="ig-row">
-              {question.ig_meta.username ? (
-                <a className="ig-name" href={question.ig_meta.profile_url || '#'} target="_blank" rel="noreferrer">
-                  {question.ig_meta.username}
-                </a>
-              ) : (
-                <span className="ig-name">Instagram</span>
-              )}
-              {question.ig_meta.full_name && <span className="muted"> · {question.ig_meta.full_name}</span>}
-            </div>
-            <div className="muted">{question.ig_meta.post_date || ''}</div>
-            {question.ig_meta.description && <p className="ig-desc">{question.ig_meta.description}</p>}
-          </div>
-        </div>
-      )}
+      {question.ig_meta && <IgMetaBlock ig={question.ig_meta} />}
     </div>
   );
 }
