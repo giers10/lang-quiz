@@ -207,6 +207,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
   const [response, setResponse] = useState<any>(null);
   const [showResult, setShowResult] = useState(false);
   const [lastCorrect, setLastCorrect] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -230,6 +231,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
     setResponse(null);
     setShowResult(false);
     setLastCorrect(false);
+    setShowExplanation(false);
   };
 
   const startQuiz = async () => {
@@ -301,6 +303,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
     }
     setLastCorrect(correct);
     setShowResult(true);
+    setShowExplanation(!correct);
   };
 
   const goNext = () => {
@@ -355,6 +358,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
 
   const targets = resolveTargets(currentQuestion);
   const correctText = deriveCorrectText(currentQuestion);
+  const shouldShowExplanation = showResult && (!lastCorrect || showExplanation);
 
   return (
     <div className="quiz-runner">
