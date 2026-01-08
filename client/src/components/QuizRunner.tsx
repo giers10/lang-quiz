@@ -68,11 +68,29 @@ function resolveTargets(question: QuizQuestionWithEntry): TargetHit[] {
   return found;
 }
 
-function deriveCorrectText(question: QuizQuestionWithEntry) {
+function deriveCorrectText(question: QuizQuestionWithEntry, userResponse: any) {
   const options: any[] = Array.isArray(question.payload?.options) ? question.payload?.options : [];
   if (typeof question.answer?.correct_index === 'number' && options[question.answer.correct_index]) {
     return options[question.answer.correct_index];
   }
+
+  if (question.type === 'match') {
+    const pairs: any[] = Array.isArray(question.payload?.pairs) ? question.payload.pairs : [];
+    if (!pairs.length) return '';
+    const messages: string[] = [];
+    pairs.forEach((pair, idx) => {
+      const correct = pair.right;
+      const picked = userResponse?.[idx];
+      if (picked !== correct) {
+        messages.push(`${pair.left} → ${correct}${picked ? ` (you picked ${picked})` : ''}`);
+      }
+    });
+    if (messages.length === 0) {
+      return pairs.map((p: any) => `${p.left} → ${p.right}`).join(' | ');
+    }
+    return messages.join(' | ');
+  }
+
   if (question.answer?.correct_text) return question.answer.correct_text;
   if (question.payload?.blanked) return question.payload.blanked;
   const pairs = Array.isArray(question.payload?.pairs) ? question.payload.pairs : [];
