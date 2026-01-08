@@ -207,7 +207,7 @@ function ExplanationPanel({ question, targets }: { question: QuizQuestionWithEnt
         <p className="muted">No linked study items were found for this question.</p>
       )}
       <VideoPlayer src={question.video_url} />
-      {question.ig_meta && <IgMetaBlock ig={question.ig_meta} />}
+      {question.ig_meta && <IgMetaBlock ig={question.ig_meta} entryId={question.entryId} />}
     </div>
   );
 }
