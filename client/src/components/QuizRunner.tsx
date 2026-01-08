@@ -417,9 +417,9 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
       />
 
       {showResult && (
-        <div className={lastCorrect ? 'callout success' : 'callout'}>
-          {lastCorrect ? 'Correct!' : lastSkipped ? 'Checked answer.' : 'Not quite.'}
-          {!lastSkipped && !lastCorrect && correctText && <div className="subline">Answer: {correctText}</div>}
+        <div className={lastSkipped ? 'callout neutral' : lastCorrect ? 'callout success' : 'callout'}>
+          {lastCorrect ? 'Correct!' : lastSkipped ? 'Answer:' : 'Not quite.'}
+          {correctText && <div className="subline">Answer: {correctText}</div>}
         </div>
       )}
 
