@@ -313,6 +313,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
       setCurrentIndex(0);
       setScore(0);
       resetQuestionState();
+      setHistory(Array(chosen.length).fill(null));
       setStatus('running');
     } catch (err: any) {
       setError(err?.message || 'Could not start quiz.');
