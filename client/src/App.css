@@ -3,14 +3,17 @@
 }
 
 .topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 1.25rem 0;
   position: sticky;
   top: 0;
   z-index: 10;
   backdrop-filter: blur(12px);
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .brand {
@@ -31,6 +34,15 @@ nav {
   text-decoration: none;
   color: inherit;
   font-weight: 600;
+}
+
+.nav-link-btn {
+  border: none;
+  background: transparent;
+  padding: 0.55rem 0.85rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .link.active {
