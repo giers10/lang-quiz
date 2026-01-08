@@ -510,6 +510,16 @@ h4 {
   font-weight: 700;
 }
 
+.match-row.correct .input {
+  background: #e6f7ed;
+  border-color: #b7e4c7;
+}
+
+.match-row.incorrect .input {
+  background: #fde8e8;
+  border-color: #f5b7b1;
+}
+
 .option-hints {
   font-size: 0.9rem;
   color: var(--muted);
