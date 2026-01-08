@@ -433,13 +433,20 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
           </>
         )}
         {showResult && (
-          <button className="button button--primary" onClick={goNext}>
-            {currentIndex + 1 === questions.length ? 'Finish' : 'Next'}
-          </button>
+          <>
+            {lastCorrect && !showExplanation && (
+              <button className="button button--ghost" onClick={() => setShowExplanation(true)}>
+                Show explanation
+              </button>
+            )}
+            <button className="button button--primary" onClick={goNext}>
+              {currentIndex + 1 === questions.length ? 'Finish' : 'Next'}
+            </button>
+          </>
         )}
       </div>
 
-      {showResult && !lastCorrect && <ExplanationPanel question={currentQuestion} targets={targets} />}
+      {shouldShowExplanation && <ExplanationPanel question={currentQuestion} targets={targets} />}
     </div>
   );
 }
