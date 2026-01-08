@@ -418,6 +418,32 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
   const correctText = deriveCorrectText(currentQuestion);
   const shouldShowExplanation = showResult && (!lastCorrect || showExplanation);
 
+  useEffect(() => {
+    if (status !== 'running') return;
+    const saved = history[currentIndex];
+    if (saved) {
+      setResponse(saved.response);
+      setShowResult(true);
+      setLastCorrect(saved.correct);
+      setLastSkipped(saved.skipped);
+      setShowExplanation(saved.showExplanation);
+    } else {
+      resetQuestionState();
+    }
+  }, [currentIndex, history, status]);
+
+  useEffect(() => {
+    if (!showResult) return;
+    setHistory((prev) => {
+      const next = [...prev];
+      const existing = next[currentIndex];
+      if (existing) {
+        next[currentIndex] = { ...existing, showExplanation };
+      }
+      return next;
+    });
+  }, [showExplanation, showResult, currentIndex]);
+
   return (
     <div className="quiz-runner">
       <div className="quiz-top">
