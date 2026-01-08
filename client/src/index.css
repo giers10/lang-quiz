@@ -84,11 +84,12 @@ h4 {
   display: flex;
   flex-direction: column;
   background: var(--card);
-  padding: 1rem;
+  padding: 1rem 1rem 0.85rem;
   border-radius: 16px;
   border: 1px solid var(--border);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   transition: transform 150ms ease, box-shadow 150ms ease;
+  gap: 0.5rem;
 }
 
 .entry-card:hover {
@@ -98,21 +99,7 @@ h4 {
 
 .entry-card__title {
   font-weight: 700;
-  margin-bottom: 0.35rem;
-}
-
-.entry-card__meta {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.entry-card__counts {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.35rem;
-  font-size: 0.9rem;
-  color: var(--muted);
+  line-height: 1.3;
 }
 
 .entry-card__actions {
