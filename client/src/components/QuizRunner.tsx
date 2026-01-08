@@ -224,6 +224,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
   const [response, setResponse] = useState<any>(null);
   const [showResult, setShowResult] = useState(false);
   const [lastCorrect, setLastCorrect] = useState(false);
+  const [lastSkipped, setLastSkipped] = useState(false);
   const [showExplanation, setShowExplanation] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -248,6 +249,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
     setResponse(null);
     setShowResult(false);
     setLastCorrect(false);
+    setLastSkipped(false);
     setShowExplanation(false);
   };
 
@@ -319,6 +321,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
       setScore((s) => s + 1);
     }
     setLastCorrect(correct);
+    setLastSkipped(skip);
     setShowResult(true);
     setShowExplanation(!correct);
   };
