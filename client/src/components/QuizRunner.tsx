@@ -322,7 +322,16 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
   };
 
   const handleSubmit = (skip = false) => {
-    if (!currentQuestion || showResult) return;
+    if (!currentQuestion) return;
+    if (history[currentIndex]) {
+      // already answered; keep locked
+      setShowResult(true);
+      setShowExplanation(history[currentIndex]?.showExplanation || false);
+      setLastCorrect(history[currentIndex]?.correct || false);
+      setLastSkipped(history[currentIndex]?.skipped || false);
+      setResponse(history[currentIndex]?.response ?? null);
+      return;
+    }
     let correct = false;
     if (!skip) {
       if ((currentQuestion.type || '').startsWith('mc') || currentQuestion.type === 'choose_best_reply') {
@@ -343,6 +352,11 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
     setLastSkipped(skip);
     setShowResult(true);
     setShowExplanation(!correct);
+    setHistory((prev) => {
+      const next = [...prev];
+      next[currentIndex] = { response, correct, skipped: skip, showExplanation: !correct };
+      return next;
+    });
   };
 
   const goNext = () => {
