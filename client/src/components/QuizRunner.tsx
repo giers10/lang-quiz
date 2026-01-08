@@ -327,7 +327,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
       const details: EntryDetail[] = await Promise.all(uniqueIds.map((id) => fetchEntry(id)));
       const pool: QuizQuestionWithEntry[] = details.flatMap((entry) => {
         const safeItems: EntryItems = entry.items || { grammar: [], vocab: [], conversation: [], key_phrases: [] };
-        return (entry.quiz || []).map((q) => ({
+        return (entry.quiz || []).map((q) => shuffleQuestionOptions({
           ...q,
           entryId: entry.id,
           entryTitle: entry.title,
