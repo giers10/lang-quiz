@@ -28,6 +28,23 @@ function shuffle<T>(list: T[]) {
   return copy;
 }
 
+function shuffleQuestionOptions(question: QuizQuestionWithEntry): QuizQuestionWithEntry {
+  const payload = { ...(question.payload || {}) };
+  const answer = { ...(question.answer || {}) };
+
+  if (Array.isArray(payload.options)) {
+    const optionsWithIndex = payload.options.map((opt: any, idx: number) => ({ opt, idx }));
+    const shuffled = shuffle(optionsWithIndex);
+    payload.options = shuffled.map((p) => p.opt);
+    if (typeof answer.correct_index === 'number') {
+      const newIdx = shuffled.findIndex((p) => p.idx === answer.correct_index);
+      answer.correct_index = newIdx >= 0 ? newIdx : answer.correct_index;
+    }
+  }
+
+  return { ...question, payload, answer };
+}
+
 const normalize = (val: any) => (val === undefined || val === null ? '' : String(val).trim());
 
 function resolveTargets(question: QuizQuestionWithEntry): TargetHit[] {
