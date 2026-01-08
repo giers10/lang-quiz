@@ -151,7 +151,16 @@ function QuestionRenderer({
     return (
       <div className="question-block matches">
         {pairs.map((pair, idx) => (
-          <div key={idx} className="match-row">
+          <div
+            key={idx}
+            className={[
+              'match-row',
+              showResult && response?.[idx] === pair.right ? 'correct' : '',
+              showResult && response?.[idx] && response?.[idx] !== pair.right ? 'incorrect' : '',
+            ]
+              .join(' ')
+              .trim()}
+          >
             <div className="match-left">{pair.left}</div>
             <select
               className="input"
