@@ -100,6 +100,28 @@ function deriveCorrectText(question: QuizQuestionWithEntry, userResponse: any) {
   return '';
 }
 
+function formatUserAnswer(question: QuizQuestionWithEntry, userResponse: any) {
+  const type = question.type || '';
+  if (type === 'cloze') {
+    return userResponse || 'No answer';
+  }
+  if (type === 'match') {
+    const pairs: any[] = Array.isArray(question.payload?.pairs) ? question.payload.pairs : [];
+    if (!pairs.length) return 'No answer';
+    return pairs
+      .map((pair, idx) => {
+        const picked = userResponse?.[idx];
+        return `${pair.left} → ${picked || '—'}`;
+      })
+      .join(' | ');
+  }
+  const options: any[] = Array.isArray(question.payload?.options) ? question.payload.options : [];
+  if (((type || '').startsWith('mc') || type === 'choose_best_reply' || !type) && typeof userResponse === 'number') {
+    return options[userResponse] ?? `Option ${userResponse}`;
+  }
+  return userResponse ?? 'No answer';
+}
+
 function checkClozeAnswer(question: QuizQuestionWithEntry, response: string) {
   if (!response) return false;
   const expected = [question.answer?.correct_text, question.answer?.correct, question.payload?.blanked].filter(Boolean).map(normalize);
