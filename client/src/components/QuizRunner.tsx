@@ -99,6 +99,7 @@ function QuestionRenderer({
   onChange: (val: any) => void;
   showResult: boolean;
   lastCorrect: boolean;
+  canSubmit: boolean;
 }) {
   const payload = question.payload || {};
   const type = question.type || '';
