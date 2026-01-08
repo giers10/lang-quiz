@@ -30,7 +30,8 @@ data/<POST_ID>/<FILENAME>.mp4
 - Base filenames must match. Extra sidecars (`.raw.txt`, `.mp4.json`, images) are ignored.
 - The JSON structure is tolerant but expects keys: `meta`, `items`, `quiz`, `ui_hints` (additional fields are ignored).
 - `entry_id` is the path from `data/` to the mp4 **without** the `.mp4` extension (e.g., `C1abc/12345`). It is URL-encoded in routes/query params.
-- Videos are served statically at `/data/...` by the backend; JSON is only accessible through the API.
+- Videos are served statically at `/data/...` by the backend by default; JSON is only accessible through the API.
+- To host media elsewhere (e.g., a CDN), set `MEDIA_BASE_URL` to the base URL of your `data` directory (e.g., `https://www.victorgiers.com/japanischvideos/data`). Video links will point there; JSON files still need to be present locally for scanning.
 
 ## API
 - `GET /api/entries` → list of entries `{ id, title, mode, type, counts, video_url }`, sorted by title.

@@ -6,6 +6,8 @@ import { z } from 'zod';
 
 const DEFAULT_DATA_ROOT = path.resolve(__dirname, '..', '..', 'data');
 const DATA_ROOT = process.env.DATA_ROOT ? path.resolve(process.env.DATA_ROOT) : DEFAULT_DATA_ROOT;
+const MEDIA_BASE_URL = process.env.MEDIA_BASE_URL || '/data';
+const CLIENT_DIST = path.resolve(__dirname, '..', '..', 'client', 'dist');
 
 const metaSchema = z
   .object({
@@ -127,7 +129,8 @@ function buildVideoUrl(id: string) {
     .filter(Boolean)
     .map((segment) => encodeURIComponent(segment))
     .join('/');
-  return `/data/${encoded}.mp4`;
+  const base = MEDIA_BASE_URL.replace(/\/+$/, '');
+  return `${base}/${encoded}.mp4`;
 }
 
 function computeCounts(items: EntryData['items'], quiz: EntryData['quiz']) {
@@ -185,26 +188,22 @@ async function loadEntries() {
     return;
   }
 
-  const mp4Paths = await glob('**/*.mp4', { cwd: DATA_ROOT, absolute: true });
-  for (const mp4Path of mp4Paths) {
-    const resolvedMp4 = path.resolve(mp4Path);
-    if (!ensureWithinDataRoot(resolvedMp4)) {
+  const jsonPaths = await glob('**/*.json', { cwd: DATA_ROOT, absolute: true });
+  for (const quizJsonPath of jsonPaths) {
+    if (quizJsonPath.endsWith('.mp4.json')) {
+      // skip instagram metadata files
       continue;
     }
 
-    const dir = path.dirname(resolvedMp4);
-    const baseName = path.basename(resolvedMp4, '.mp4');
-    const jsonPath = path.join(dir, `${baseName}.json`);
-    const mp4MetaPath = path.join(dir, `${baseName}.mp4.json`);
-
-    if (!(await fileExists(jsonPath))) {
-      continue;
-    }
-
-    const resolvedJson = path.resolve(jsonPath);
+    const resolvedJson = path.resolve(quizJsonPath);
     if (!ensureWithinDataRoot(resolvedJson)) {
       continue;
     }
+
+    const dir = path.dirname(resolvedJson);
+    const baseName = path.basename(resolvedJson, '.json');
+    const resolvedMp4 = path.join(dir, `${baseName}.mp4`);
+    const mp4MetaPath = path.join(dir, `${baseName}.mp4.json`);
 
     let igMeta: EntryRecord['igMeta'];
     const resolvedMp4Meta = path.resolve(mp4MetaPath);
@@ -234,8 +233,8 @@ async function loadEntries() {
       parsed = entrySchema.parse({});
     }
 
-    const relative = path.relative(DATA_ROOT, resolvedMp4);
-    const id = toPosixId(relative.replace(/\.mp4$/i, ''));
+    const relative = path.relative(DATA_ROOT, resolvedJson);
+    const id = toPosixId(relative.replace(/\.json$/i, ''));
     const title = parsed.meta?.title_en?.trim() || baseName;
     const video_url = buildVideoUrl(id);
     const counts = computeCounts(parsed.items || { grammar: [], vocab: [], conversation: [], key_phrases: [] }, parsed.quiz || []);
@@ -280,11 +279,10 @@ async function main() {
 
   app.disable('x-powered-by');
 
-  app.use('/data', express.static(DATA_ROOT));
-
-  app.get('/', (_req, res) => {
-    res.type('text/plain').send('IG Japanese Quizzer backend is running. See /api/entries.');
-  });
+  // Serve local data only when MEDIA_BASE_URL points to the local /data path
+  if (MEDIA_BASE_URL === '/data') {
+    app.use('/data', express.static(DATA_ROOT));
+  }
 
   app.get('/api/entries', (_req, res) => {
     const entries = Array.from(entryIndex.values())
@@ -365,6 +363,17 @@ async function main() {
       res.status(500).json({ error: 'Proxy failed' });
     }
   });
+
+  const hasClient = await fileExists(path.join(CLIENT_DIST, 'index.html'));
+  if (hasClient) {
+    app.use(express.static(CLIENT_DIST));
+    app.get('*', (req, res, next) => {
+      if (req.path.startsWith('/api')) return next();
+      res.sendFile(path.join(CLIENT_DIST, 'index.html'));
+    });
+  } else {
+    console.warn('Client dist not found; only API will be served.');
+  }
 
   app.listen(port, () => {
     console.log(`Server listening on http://localhost:${port}`);
