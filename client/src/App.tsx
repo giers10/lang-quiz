@@ -1,10 +1,15 @@
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import OverviewPage from './pages/OverviewPage';
 import EntryPage from './pages/EntryPage';
 import QuizPage from './pages/QuizPage';
 import './App.css';
 
 export default function App() {
+  const navigate = useNavigate();
+  const startRandomQuiz = () => {
+    navigate(`/quiz?mode=all&nonce=${Date.now()}`);
+  };
+
   return (
     <div className="app-shell">
       <header className="topbar">
@@ -15,9 +20,9 @@ export default function App() {
           <NavLink to="/" end className={({ isActive }) => (isActive ? 'link active' : 'link')}>
             Overview
           </NavLink>
-          <NavLink to="/quiz?mode=all&nonce=${Date.now()}" className={({ isActive }) => (isActive ? 'link active' : 'link')}>
+          <button className="link" onClick={startRandomQuiz}>
             New Random Quiz
-          </NavLink>
+          </button>
         </nav>
       </header>
 
