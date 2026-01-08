@@ -34,9 +34,16 @@ export default function App() {
             >
               New Random Quiz
             </NavLink>
-            <button className="link nav-link-btn" onClick={startRandomReel}>
+            <NavLink
+              to="/entry/random"
+              className={({ isActive }) => (isActive ? 'link active' : 'link')}
+              onClick={(e) => {
+                e.preventDefault();
+                startRandomReel();
+              }}
+            >
               Random Reel
-            </button>
+            </NavLink>
           </nav>
         </div>
       </header>
