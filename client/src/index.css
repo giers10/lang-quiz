@@ -579,8 +579,8 @@ h4 {
 }
 
 .quiz-finished .actions .button {
-  min-width: 150px;
-  justify-content: center;
+  font-size: 0.95rem;
+  padding: 0.6rem 0.95rem;
 }
 
 @media (max-width: 720px) {
