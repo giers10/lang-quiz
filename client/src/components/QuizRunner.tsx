@@ -514,7 +514,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
   }
 
   const targets = resolveTargets(currentQuestion);
-  const correctText = deriveCorrectText(currentQuestion);
+  const correctText = deriveCorrectText(currentQuestion, response);
   const shouldShowExplanation = showResult && (!lastCorrect || showExplanation);
 
   return (
