@@ -23,11 +23,9 @@ export default function OverviewPage() {
     <div>
       <div className="page-header">
         <div>
-          <p className="eyebrow">IG Japanese Quizzer</p>
           <h1>Choose a reel to study</h1>
           <p className="muted">Each card bundles grammar, vocab, phrases, and quizzes pulled from your local data folder.</p>
         </div>
-        <Link className="button" to="/quiz">Jump to Quiz Wizard</Link>
       </div>
       {entries.length === 0 ? (
         <div className="error">No entries detected in data/. Add mp4 + json pairs and restart the server.</div>
