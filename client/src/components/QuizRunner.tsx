@@ -191,7 +191,12 @@ import IgMetaBlock from './IgMetaBlock';
 function ExplanationPanel({ question, targets }: { question: QuizQuestionWithEntry; targets: TargetHit[] }) {
   return (
     <div className="explanation">
-      <h4>Explanation</h4>
+      <div className="explanation-header">
+        <h4>Explanation</h4>
+        <Link className="entry-link" to={`/entry/${encodeURIComponent(question.entryId)}`}>
+          Open learn page &raquo;
+        </Link>
+      </div>
       {targets.length ? (
         <div className="explanation-grid">
           {targets.map(({ group, item }) => (
