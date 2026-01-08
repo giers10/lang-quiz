@@ -74,7 +74,8 @@ h4 {
 }
 
 .entry-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   background: var(--card);
   padding: 1rem;
   border-radius: 16px;
@@ -105,6 +106,12 @@ h4 {
   gap: 0.35rem;
   font-size: 0.9rem;
   color: var(--muted);
+}
+
+.entry-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 .pill {
