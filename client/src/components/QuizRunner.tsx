@@ -373,6 +373,32 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
     }
   };
 
+  useEffect(() => {
+    if (status !== 'running') return;
+    const saved = history[currentIndex];
+    if (saved) {
+      setResponse(saved.response);
+      setShowResult(true);
+      setLastCorrect(saved.correct);
+      setLastSkipped(saved.skipped);
+      setShowExplanation(saved.showExplanation);
+    } else {
+      resetQuestionState();
+    }
+  }, [currentIndex, history, status]);
+
+  useEffect(() => {
+    if (!showResult) return;
+    setHistory((prev) => {
+      const next = [...prev];
+      const existing = next[currentIndex];
+      if (existing) {
+        next[currentIndex] = { ...existing, showExplanation };
+      }
+      return next;
+    });
+  }, [showExplanation, showResult, currentIndex]);
+
   if (loadingEntries) {
     return <div className="loading">Loading quiz setup…</div>;
   }
