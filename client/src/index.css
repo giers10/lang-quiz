@@ -112,7 +112,7 @@ h4 {
 .entry-card__actions.inline {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.1rem;
   align-items: flex-end;
   flex: 0 0 auto;
   min-width: 0;
