@@ -44,7 +44,6 @@ export default function EntryPage() {
     <div className="entry-page">
       <div className="crumbs row-between">
         <button className="button button--ghost" onClick={() => navigate(-1)}>← Back</button>
-        <button className="button" onClick={() => navigate(quizLink)}>Start quiz</button>
       </div>
       <div className="page-header">
         <div>
@@ -54,6 +53,11 @@ export default function EntryPage() {
 
       <div className="video-row">
         <VideoPlayer src={entry.video_url} variant="compact" quizLink={quizLink} />
+        <div className="video-cta">
+          <button className="button button--primary" onClick={() => navigate(quizLink)}>
+            Start quiz
+          </button>
+        </div>
       </div>
       {ig && <IgMetaBlock ig={ig} entryId={entry.id} />}
 
