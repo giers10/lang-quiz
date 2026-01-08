@@ -515,7 +515,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
           >
             Back
           </button>
-          <button className="button button--primary" onClick={startQuiz}>
+          <button className="button" onClick={startQuiz}>
             Play again
           </button>
           <Link className="button button--ghost" to="/">
