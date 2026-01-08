@@ -43,6 +43,13 @@ h4 {
   letter-spacing: -0.01em;
 }
 
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
 .main {
   padding-top: 0.5rem;
 }
