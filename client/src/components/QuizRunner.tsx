@@ -566,7 +566,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
                     {idx + 1}. {question.prompt_en || 'Question'}
                   </div>
                   {isRandomMode && (
-                    <Link className="entry-link" to={entryHref}>
+                    <Link className="entry-link" to={entryHref} target="_blank" rel="noreferrer">
                       Learn page &raquo;
                     </Link>
                   )}
