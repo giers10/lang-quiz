@@ -115,6 +115,7 @@ function QuestionRenderer({
           placeholder="Type the missing text"
           value={response || ''}
           onChange={(e) => onChange(e.target.value)}
+          disabled={showResult}
         />
         {Array.isArray(payload.options) && payload.options.length > 0 && (
           <div className="option-hints">Hints: {payload.options.join(' • ')}</div>
@@ -141,6 +142,7 @@ function QuestionRenderer({
                 const current = response && typeof response === 'object' ? response : {};
                 onChange({ ...current, [idx]: e.target.value });
               }}
+              disabled={showResult}
             >
               <option value="">Match…</option>
               {rightOptions.map((opt, optionIdx) => (
@@ -175,6 +177,7 @@ function QuestionRenderer({
             checked={response === idx}
             onChange={() => onChange(idx)}
             name={`q-${question.id}`}
+            disabled={showResult}
           />
           <span>{option}</span>
         </label>
