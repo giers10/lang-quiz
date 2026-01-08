@@ -2,6 +2,7 @@ import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import OverviewPage from './pages/OverviewPage';
 import EntryPage from './pages/EntryPage';
 import QuizPage from './pages/QuizPage';
+import RandomEntryRedirect from './pages/RandomEntryRedirect';
 import './App.css';
 
 export default function App() {
@@ -51,6 +52,7 @@ export default function App() {
       <main className="main">
         <Routes>
           <Route path="/" element={<OverviewPage />} />
+          <Route path="/entry/random" element={<RandomEntryRedirect />} />
           <Route path="/entry/:idEncoded" element={<EntryPage />} />
           <Route path="/quiz" element={<QuizPage />} />
         </Routes>
