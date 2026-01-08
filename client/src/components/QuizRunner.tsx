@@ -549,11 +549,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
             Home
           </Link>
           {entryLink && (
-            <Link
-              className="button button--ghost"
-              to={entryLink}
-              state={{ fromSummary: true }}
-            >
+            <Link className="button button--ghost" to={entryLink}>
               Back to learn page
             </Link>
           )}
@@ -570,7 +566,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
                     {idx + 1}. {question.prompt_en || 'Question'}
                   </div>
                   {isRandomMode && (
-                    <Link className="entry-link" to={entryHref} state={{ fromSummary: true }}>
+                    <Link className="entry-link" to={entryHref}>
                       Learn page &raquo;
                     </Link>
                   )}

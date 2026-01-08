@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchEntry } from '../api';
 import VideoPlayer from '../components/VideoPlayer';
 import { ConversationPanel, GrammarPanel, KeyPhrasePanel, VocabPanel } from '../components/ItemPanels';
@@ -8,7 +8,6 @@ import type { EntryDetail } from '../types';
 
 export default function EntryPage() {
   const { idEncoded } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
   const [entry, setEntry] = useState<EntryDetail | null>(null);
   const [loading, setLoading] = useState(true);
@@ -40,15 +39,11 @@ export default function EntryPage() {
 
   const quizLink = `/quiz?mode=entry&id=${encodeURIComponent(entry.id)}`;
   const ig = entry.ig_meta;
-  const fromSummary = Boolean(location.state && (location.state as any).fromSummary);
 
   return (
     <div className="entry-page">
       <div className="crumbs row-between">
         <button className="button button--ghost" onClick={() => navigate(-1)}>← Back</button>
-        {fromSummary && (
-          <button className="button button--ghost" onClick={() => navigate(-1)}>Back to summary</button>
-        )}
       </div>
       <div className="page-header">
         <div>
