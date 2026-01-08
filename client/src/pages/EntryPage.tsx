@@ -42,8 +42,9 @@ export default function EntryPage() {
 
   return (
     <div className="entry-page">
-      <div className="crumbs">
+      <div className="crumbs row-between">
         <button className="button button--ghost" onClick={() => navigate(-1)}>← Back</button>
+        <button className="button" onClick={() => navigate(quizLink)}>Start quiz</button>
       </div>
       <div className="page-header">
         <div>
