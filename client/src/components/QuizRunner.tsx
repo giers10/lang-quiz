@@ -198,8 +198,8 @@ function ExplanationPanel({ question, targets }: { question: QuizQuestionWithEnt
 export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoStart }: QuizRunnerProps) {
   const [entries, setEntries] = useState<EntrySummary[]>([]);
   const [loadingEntries, setLoadingEntries] = useState(true);
-  const [mode, setMode] = useState<Mode>(defaultMode);
-  const [selectedIds, setSelectedIds] = useState<string[]>(defaultEntryId ? [defaultEntryId] : []);
+  const [mode] = useState<Mode>(defaultMode);
+  const [selectedIds] = useState<string[]>(defaultEntryId ? [defaultEntryId] : []);
   const [questions, setQuestions] = useState<QuizQuestionWithEntry[]>([]);
   const [status, setStatus] = useState<'setup' | 'loading' | 'running' | 'finished'>('setup');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -218,14 +218,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
   }, []);
 
   useEffect(() => {
-    if (defaultEntryId) {
-      setMode('single');
-      setSelectedIds([defaultEntryId]);
-    }
-  }, [defaultEntryId]);
-
-  useEffect(() => {
-    if (autoStart && defaultEntryId && entries.length > 0) {
+    if (autoStart && entries.length > 0) {
       startQuiz();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
