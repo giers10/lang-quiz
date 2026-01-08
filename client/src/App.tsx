@@ -28,7 +28,7 @@ export default function App() {
             </NavLink>
             <NavLink
               to="/quiz?mode=all"
-              className={({ isActive }) => (isActive ? 'link active' : 'link')}
+              className={({ isActive }) => (isActive && location.search.includes('mode=all') ? 'link active' : 'link')}
               onClick={(e) => {
                 e.preventDefault();
                 startRandomQuiz();
