@@ -490,20 +490,33 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
 
   if (status === 'finished') {
     const lastIndex = questions.length ? questions.length - 1 : 0;
+    const isRandomMode = mode === 'all';
+    const entryLink = !isRandomMode && currentQuestion ? `/entry/${encodeURIComponent(currentQuestion.entryId)}` : null;
     return (
       <div className="quiz-finished">
         <h2>Nice work!</h2>
         <p className="muted">You scored {score} out of {questions.length}.</p>
-        <div className="actions">
-          <button className="button button--ghost" onClick={() => {
-            setStatus('running');
-            setCurrentIndex(lastIndex);
-          }}>
+        <div className="actions" style={{ gap: '0.5rem', flexWrap: 'wrap' }}>
+          <button
+            className="button button--ghost"
+            onClick={() => {
+              setStatus('running');
+              setCurrentIndex(lastIndex);
+            }}
+          >
             Back
           </button>
           <button className="button" onClick={startQuiz}>
             Play again
           </button>
+          <NavLink className="button button--ghost" to="/">
+            Home
+          </NavLink>
+          {entryLink && (
+            <NavLink className="button button--ghost" to={entryLink}>
+              Back to learn page
+            </NavLink>
+          )}
         </div>
       </div>
     );
