@@ -9,6 +9,9 @@ export default function App() {
   const startRandomQuiz = () => {
     navigate(`/quiz?mode=all&nonce=${Date.now()}`);
   };
+  const startRandomReel = () => {
+    navigate(`/entry/random?nonce=${Date.now()}`);
+  };
 
   return (
     <div className="app-shell">
@@ -18,9 +21,9 @@ export default function App() {
             IG Japanese Quizzer
           </NavLink>
           <nav>
-          <NavLink to="/" end className={({ isActive }) => (isActive ? 'link active' : 'link')}>
-            Overview
-          </NavLink>
+            <NavLink to="/" end className={({ isActive }) => (isActive ? 'link active' : 'link')}>
+              Overview
+            </NavLink>
             <NavLink
               to="/quiz?mode=all"
               className={({ isActive }) => (isActive ? 'link active' : 'link')}
@@ -31,6 +34,9 @@ export default function App() {
             >
               New Random Quiz
             </NavLink>
+            <button className="link nav-link-btn" onClick={startRandomReel}>
+              Random Reel
+            </button>
           </nav>
         </div>
       </header>
