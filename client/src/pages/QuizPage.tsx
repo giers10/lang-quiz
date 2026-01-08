@@ -19,9 +19,8 @@ export default function QuizPage() {
     return { mode: modeParam, entryId: decodedId };
   }, [params]);
 
-  const defaultMode = mode === 'entry' ? 'single' : mode === 'selected' ? 'selected' : 'all';
-
-  const autoStart = mode === 'entry' && !!entryId;
+  const defaultMode = mode === 'entry' ? 'single' : 'all';
+  const autoStart = true;
 
   return <QuizRunner defaultMode={defaultMode} defaultEntryId={entryId} autoStart={autoStart} />;
 }
