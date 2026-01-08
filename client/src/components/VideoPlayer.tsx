@@ -62,14 +62,14 @@ export default function VideoPlayer({ src, variant = 'wide', quizLink }: Props) 
       />
       {ended && (
         <div className="video-overlay">
+          <button className="button" onClick={handleReplay}>
+            Play again
+          </button>
           {quizLink && (
             <Link className="button button--primary" to={quizLink}>
               Start quiz
             </Link>
           )}
-          <button className="button" onClick={handleReplay}>
-            Play again
-          </button>
         </div>
       )}
     </div>
