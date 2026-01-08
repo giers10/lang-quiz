@@ -518,6 +518,11 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
     const correctCount = answered.filter((h) => h.correct).length;
     const skippedCount = answered.filter((h) => h.skipped).length;
     const wrongCount = Math.max(0, answered.length - correctCount - skippedCount);
+    const summaryItems = questions.map((q, idx) => {
+      const h = history[idx];
+      const statusTag = h?.skipped ? 'skipped' : h?.correct ? 'correct' : 'wrong';
+      return { question: q, history: h, statusTag };
+    });
     return (
       <div className="quiz-finished">
         <h2>Nice work!</h2>
@@ -548,6 +553,31 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
               Back to learn page
             </Link>
           )}
+        </div>
+        <div className="summary-list">
+          {summaryItems.map(({ question, history: h, statusTag }, idx) => {
+            const correctText = deriveCorrectText(question, h?.response);
+            const userText = h ? formatUserAnswer(question, h.response) : 'No answer';
+            const entryHref = `/entry/${encodeURIComponent(question.entryId)}`;
+            return (
+              <div key={question.id || idx} className={`summary-item ${statusTag}`}>
+                <div className="summary-top">
+                  <div className="summary-question">
+                    {idx + 1}. {question.prompt_en || 'Question'}
+                  </div>
+                  {isRandomMode && (
+                    <Link className="entry-link" to={entryHref}>
+                      Learn page &raquo;
+                    </Link>
+                  )}
+                </div>
+                <div className="summary-answers">
+                  <div className={`pill ${statusTag}`}>You: {userText}</div>
+                  <div className="pill">Answer: {correctText || '—'}</div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
