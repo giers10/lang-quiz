@@ -234,11 +234,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
 
   const startQuiz = async () => {
     const ids: string[] =
-      mode === 'all'
-        ? entries.map((e) => e.id)
-        : mode === 'selected'
-        ? selectedIds
-        : selectedIds.slice(0, 1);
+      mode === 'all' ? entries.map((e) => e.id) : selectedIds.length ? selectedIds.slice(0, 1) : entries.map((e) => e.id);
 
     if (!ids.length) {
       setError('Pick at least one entry to quiz on.');
@@ -322,73 +318,14 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
   if (status === 'setup') {
     return (
       <div className="quiz-setup">
-        <div className="page-header">
-          <div>
-            <p className="eyebrow">Quiz Wizard</p>
-            <h1>Pick a mode</h1>
-            <p className="muted">Build a 10-question run from all entries, a custom set, or a single reel.</p>
-          </div>
-        </div>
-
-        <div className="mode-switch">
-          <button className={mode === 'all' ? 'button button--solid' : 'button'} onClick={() => setMode('all')}>
-            Mode A · All entries
-          </button>
-          <button className={mode === 'selected' ? 'button button--solid' : 'button'} onClick={() => setMode('selected')}>
-            Mode B · Select entries
-          </button>
-          <button className={mode === 'single' ? 'button button--solid' : 'button'} onClick={() => setMode('single')}>
-            Mode C · Single entry
-          </button>
-        </div>
-
-        {mode === 'selected' && (
-          <div className="selector">
-            <p className="muted">Check the entries you want in the pool.</p>
-            <div className="selector-grid">
-              {entries.map((entry) => (
-                <label key={entry.id} className="selector-row">
-                  <input
-                    type="checkbox"
-                    checked={selectedIds.includes(entry.id)}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setSelectedIds((prev) => [...prev, entry.id]);
-                      } else {
-                        setSelectedIds((prev) => prev.filter((id) => id !== entry.id));
-                      }
-                    }}
-                  />
-                  <span>{entry.title}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {mode === 'single' && (
-          <div className="selector">
-            <p className="muted">Pick the entry to drill.</p>
-            <select
-              className="input"
-              value={selectedIds[0] || ''}
-              onChange={(e) => setSelectedIds(e.target.value ? [e.target.value] : [])}
-            >
-              <option value="">Select an entry…</option>
-              {entries.map((entry) => (
-                <option key={entry.id} value={entry.id}>
-                  {entry.title}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
+        <h2>Building your quiz…</h2>
+        <p className="muted">Preparing 10 questions from {mode === 'single' ? 'this entry' : 'all entries'}.</p>
         {error && <div className="error">{error}</div>}
-
-        <button className="button button--primary" onClick={startQuiz}>
-          Start quiz
-        </button>
+        {!autoStart && (
+          <button className="button button--primary" onClick={startQuiz}>
+            Start quiz
+          </button>
+        )}
       </div>
     );
   }
