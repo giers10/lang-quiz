@@ -18,12 +18,19 @@ export default function App() {
             IG Japanese Quizzer
           </NavLink>
           <nav>
-            <NavLink to="/" end className={({ isActive }) => (isActive ? 'link active' : 'link')}>
-              Overview
-            </NavLink>
-            <button className="link nav-link-btn" onClick={startRandomQuiz}>
+          <NavLink to="/" end className={({ isActive }) => (isActive ? 'link active' : 'link')}>
+            Overview
+          </NavLink>
+            <NavLink
+              to="/quiz?mode=all"
+              className={({ isActive }) => (isActive ? 'link active' : 'link')}
+              onClick={(e) => {
+                e.preventDefault();
+                startRandomQuiz();
+              }}
+            >
               New Random Quiz
-            </button>
+            </NavLink>
           </nav>
         </div>
       </header>
