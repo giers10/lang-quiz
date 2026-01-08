@@ -492,10 +492,19 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
     const lastIndex = questions.length ? questions.length - 1 : 0;
     const isRandomMode = mode === 'all';
     const entryLink = !isRandomMode && currentQuestion ? `/entry/${encodeURIComponent(currentQuestion.entryId)}` : null;
+    const answered = history.filter(Boolean) as { response: any; correct: boolean; skipped: boolean; showExplanation: boolean }[];
+    const correctCount = answered.filter((h) => h.correct).length;
+    const skippedCount = answered.filter((h) => h.skipped).length;
+    const wrongCount = Math.max(0, answered.length - correctCount - skippedCount);
     return (
       <div className="quiz-finished">
         <h2>Nice work!</h2>
         <p className="muted">You scored {score} out of {questions.length}.</p>
+        <div className="summary">
+          <div className="pill">Correct {correctCount}</div>
+          <div className="pill">Wrong {wrongCount}</div>
+          <div className="pill">Skipped {skippedCount}</div>
+        </div>
         <div className="actions" style={{ gap: '0.5rem', flexWrap: 'wrap' }}>
           <button
             className="button button--ghost"
