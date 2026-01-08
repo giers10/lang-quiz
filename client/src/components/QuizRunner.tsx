@@ -464,6 +464,13 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
         onChange={setResponse}
         showResult={showResult}
         lastCorrect={lastCorrect}
+        canSubmit={Boolean(
+          (currentQuestion.type === 'cloze' && response && String(response).trim().length > 0) ||
+            (currentQuestion.type === 'match' && response && Object.values(response).every((v) => v)) ||
+            ((currentQuestion.type || '').startsWith('mc') && typeof response === 'number') ||
+            (currentQuestion.type === 'choose_best_reply' && typeof response === 'number') ||
+            (!currentQuestion.type && typeof response === 'number')
+        )}
       />
 
       {showResult && (
