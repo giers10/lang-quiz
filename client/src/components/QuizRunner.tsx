@@ -389,7 +389,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (status !== 'running') return;
     const saved = history[currentIndex];
     if (saved) {
@@ -403,7 +403,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
     }
   }, [currentIndex, history, status]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!showResult) return;
     setHistory((prev) => {
       const next = [...prev];
