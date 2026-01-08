@@ -504,6 +504,11 @@ h4 {
   color: #0f9d58;
 }
 
+.callout.neutral {
+  background: #f9fafb;
+  color: #111827;
+}
+
 .explanation {
   margin-top: 1rem;
   padding-top: 0.5rem;
