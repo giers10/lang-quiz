@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import EntryCard from '../components/EntryCard';
 import { fetchEntries } from '../api';
 import type { EntrySummary } from '../types';
