@@ -233,6 +233,9 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
   const [mode] = useState<Mode>(defaultMode);
   const [selectedIds] = useState<string[]>(defaultEntryId ? [defaultEntryId] : []);
   const [questions, setQuestions] = useState<QuizQuestionWithEntry[]>([]);
+  const [history, setHistory] = useState<
+    { response: any; correct: boolean; skipped: boolean; showExplanation: boolean }[]
+  >([]);
   const [status, setStatus] = useState<'setup' | 'loading' | 'running' | 'finished'>('setup');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
