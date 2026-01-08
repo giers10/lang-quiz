@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { fetchEntry } from '../api';
 import VideoPlayer from '../components/VideoPlayer';
 import { ConversationPanel, GrammarPanel, KeyPhrasePanel, VocabPanel } from '../components/ItemPanels';
@@ -8,6 +8,7 @@ import type { EntryDetail } from '../types';
 
 export default function EntryPage() {
   const { idEncoded } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const [entry, setEntry] = useState<EntryDetail | null>(null);
   const [loading, setLoading] = useState(true);
