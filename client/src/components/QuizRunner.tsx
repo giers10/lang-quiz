@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { fetchEntries, fetchEntry } from '../api';
-import type { EntryItems, EntrySummary, QuizQuestionWithEntry } from '../types';
+import type { EntryDetail, EntryItems, EntrySummary, QuizQuestionWithEntry } from '../types';
 import VideoPlayer from './VideoPlayer';
 
 type Mode = 'all' | 'selected' | 'single';
@@ -246,7 +246,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
 
     try {
       const uniqueIds = Array.from(new Set(ids));
-      const details = await Promise.all(uniqueIds.map((id) => fetchEntry(id)));
+      const details: EntryDetail[] = await Promise.all(uniqueIds.map((id) => fetchEntry(id)));
       const pool: QuizQuestionWithEntry[] = details.flatMap((entry) => {
         const safeItems: EntryItems = entry.items || { grammar: [], vocab: [], conversation: [], key_phrases: [] };
         return (entry.quiz || []).map((q) => ({
@@ -255,6 +255,7 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
           entryTitle: entry.title,
           items: safeItems,
           video_url: entry.video_url,
+          ig_meta: entry.ig_meta,
           targets: q.targets || [],
           type: q.type || 'unknown',
           payload: q.payload || {},
