@@ -40,11 +40,15 @@ export default function EntryPage() {
 
   const quizLink = `/quiz?mode=entry&id=${encodeURIComponent(entry.id)}`;
   const ig = entry.ig_meta;
+  const fromSummary = Boolean(location.state && (location.state as any).fromSummary);
 
   return (
     <div className="entry-page">
       <div className="crumbs row-between">
         <button className="button button--ghost" onClick={() => navigate(-1)}>← Back</button>
+        {fromSummary && (
+          <button className="button button--ghost" onClick={() => navigate(-1)}>Back to summary</button>
+        )}
       </div>
       <div className="page-header">
         <div>
