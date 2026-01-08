@@ -364,7 +364,12 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
       setStatus('finished');
     } else {
       setCurrentIndex((idx) => idx + 1);
-      resetQuestionState();
+    }
+  };
+
+  const goPrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((idx) => Math.max(0, idx - 1));
     }
   };
 
