@@ -475,7 +475,10 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
       )}
 
       <div className="quiz-actions">
-        {!showResult && (
+        <button className="button button--ghost" onClick={goPrev} disabled={currentIndex === 0}>
+          Back
+        </button>
+        {!showResult ? (
           <>
             <button className="button" onClick={() => handleSubmit(false)}>
               Submit
@@ -484,12 +487,8 @@ export default function QuizRunner({ defaultMode = 'all', defaultEntryId, autoSt
               Don’t know
             </button>
           </>
-        )}
-        {showResult && (
+        ) : (
           <>
-            <button className="button button--ghost" onClick={goPrev} disabled={currentIndex === 0}>
-              Back
-            </button>
             <button className="button button--primary" onClick={goNext}>
               {currentIndex + 1 === questions.length ? 'Finish' : 'Next'}
             </button>
