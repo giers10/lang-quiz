@@ -443,6 +443,17 @@ h4 {
   border-radius: 10px;
   padding: 0.5rem 0.75rem;
   margin-bottom: 0.35rem;
+  border: 1px solid transparent;
+}
+
+.option.correct {
+  background: #e6f7ed;
+  border-color: #b7e4c7;
+}
+
+.option.incorrect {
+  background: #fde8e8;
+  border-color: #f5b7b1;
 }
 
 .matches {
