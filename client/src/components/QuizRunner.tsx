@@ -93,6 +93,7 @@ function QuestionRenderer({
   onChange,
   showResult,
   lastCorrect,
+  canSubmit,
 }: {
   question: QuizQuestionWithEntry;
   response: any;
