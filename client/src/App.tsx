@@ -13,17 +13,19 @@ export default function App() {
   return (
     <div className="app-shell">
       <header className="topbar">
-        <NavLink to="/" className="brand">
-          IG Japanese Quizzer
-        </NavLink>
-        <nav>
-          <NavLink to="/" end className={({ isActive }) => (isActive ? 'link active' : 'link')}>
-            Overview
+        <div className="container topbar-inner">
+          <NavLink to="/" className="brand">
+            IG Japanese Quizzer
           </NavLink>
-          <button className="link" onClick={startRandomQuiz}>
-            New Random Quiz
-          </button>
-        </nav>
+          <nav>
+            <NavLink to="/" end className={({ isActive }) => (isActive ? 'link active' : 'link')}>
+              Overview
+            </NavLink>
+            <button className="link nav-link-btn" onClick={startRandomQuiz}>
+              New Random Quiz
+            </button>
+          </nav>
+        </div>
       </header>
 
       <main className="main">
