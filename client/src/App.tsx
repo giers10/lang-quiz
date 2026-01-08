@@ -15,8 +15,8 @@ export default function App() {
           <NavLink to="/" end className={({ isActive }) => (isActive ? 'link active' : 'link')}>
             Overview
           </NavLink>
-          <NavLink to="/quiz?mode=all" className={({ isActive }) => (isActive ? 'link active' : 'link')}>
-            Random Quiz
+          <NavLink to="/quiz?mode=all&nonce=${Date.now()}" className={({ isActive }) => (isActive ? 'link active' : 'link')}>
+            New Random Quiz
           </NavLink>
         </nav>
       </header>
